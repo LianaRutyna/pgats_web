@@ -1,0 +1,50 @@
+{
+  "testCase15": {
+    "title": "TC15 - Place Order: Register before Checkout",
+    "userData": {
+      "name": "John Test",
+      "email": "johntest@test.com",
+      "password": "12345",
+      "title": "Mr",
+      "day": "1",
+      "month": "1",
+      "year": "2000",
+      "firstName": "John",
+      "lastName": "Test",
+      "address1": "Test Street, 00",
+      "city": "New City",
+      "state": "New",
+      "zipcode": "123456",
+      "country": "United States",
+      "mobileNumber": "00 12345678"
+    },
+    "checkoutComment": "testing order",
+    "paymentData": {
+      "nameOnCard": "John Test",
+      "cardNumber": "0123456789",
+      "cvc": "111",
+      "expiryMonth": "12",
+      "expiryYear": "2029"
+    },
+    "expectedMessages": {
+      "accountCreated": "ACCOUNT CREATED!",
+      "accountDeleted": "ACCOUNT DELETED!",
+      "orderSuccess": "Your order has been placed successfully!",
+      "addressDetails": "Address Details",
+      "reviewOrder": "Review Your Order"
+    }
+  },
+  "checkoutMessages": {
+    "registerLogin": "Register / Login account to proceed on checkout.",
+    "addressDetails": "Address Details",
+    "reviewOrder": "Review Your Order"
+  },
+  "paymentData": {
+    "nameOnCard": "Test User",
+    "cardNumber": "4242424242424242",
+    "cvc": "123",
+    "expirationMonth": "12",
+    "expirationYear": "2028"
+  }
+}
+

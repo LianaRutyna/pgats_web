@@ -1,0 +1,33 @@
+{
+  "name": "cypress-automation-poc",
+  "version": "1.0.0",
+  "description": "Cypress E2E testing framework with best practices",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:chrome": "cypress run --browser chrome",
+    "cy:run:firefox": "cypress run --browser firefox",
+    "test": "cypress run",
+    "test:report": "npm run test:clean && cypress run && npm run report:merge && npm run report:generate",
+    "test:clean": "rm -rf cypress/reports/mochawesome && mkdir -p cypress/reports/mochawesome",
+    "report:merge": "mochawesome-merge cypress/reports/mochawesome/*.json > cypress/reports/mochawesome/report.json",
+    "report:generate": "marge cypress/reports/mochawesome/report.json -f report -o cypress/reports/mochawesome",
+    "report:open": "open cypress/reports/mochawesome/report.html || xdg-open cypress/reports/mochawesome/report.html"
+  },
+  "keywords": [
+    "cypress",
+    "e2e",
+    "testing"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^8.3.1",
+    "cypress": "13.17.0",
+    "cypress-xpath": "^2.0.1",
+    "mochawesome": "7.1.4",
+    "mochawesome-merge": "5.0.0",
+    "mochawesome-report-generator": "6.3.0"
+  }
+}

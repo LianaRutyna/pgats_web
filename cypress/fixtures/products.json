@@ -1,0 +1,24 @@
+{
+  "categories": [
+    "Women",
+    "Men",
+    "Kids"
+  ],
+  "subcategories": {
+    "Women": ["Dress", "Tops", "Saree"],
+    "Men": ["Tshirts", "Jeans"],
+    "Kids": ["Dress", "Tops & Shirts"]
+  },
+  "searchTerms": [
+    "blue",
+    "top",
+    "dress",
+    "jeans",
+    "shirt"
+  ],
+  "expectedMessages": {
+    "searchedProducts": "SEARCHED PRODUCTS",
+    "allProducts": "ALL PRODUCTS"
+  }
+}
+

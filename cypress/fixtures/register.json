@@ -1,0 +1,41 @@
+{
+  "testData": {
+    "password": "Test@12345",
+    "dateOfBirth": {
+      "day": "1",
+      "month": "1",
+      "year": "2000"
+    },
+    "address": {
+      "company": "Test Company Inc.",
+      "address1": "Test Street, 00",
+      "address2": "Apt 123",
+      "country": "United States",
+      "state": "New York",
+      "city": "New York City",
+      "zipcode": "123456"
+    },
+    "phoneNumber": "00 12345678"
+  },
+  "titles": {
+    "mr": "Mr",
+    "mrs": "Mrs"
+  },
+  "countries": [
+    "India",
+    "United States",
+    "Canada",
+    "Australia",
+    "Israel",
+    "New Zealand",
+    "Singapore"
+  ],
+  "expectedMessages": {
+    "newUserSignup": "New User Signup!",
+    "enterAccountInfo": "Enter Account Information",
+    "accountCreated": "Account Created!",
+    "accountDeleted": "Account Deleted!",
+    "loggedInAs": "Logged in as"
+  }
+}
+
