@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: Web E2E Tests
 
 on:
   push:
@@ -16,77 +16,31 @@ on:
           - chrome
           - firefox
           - electron
-      specs:
-        description: 'Specs to run (e.g., cypress/e2e/**/*.cy.js)'
-        required: false
-        default: 'cypress/e2e/**/*.cy.js'
-        type: string
-      debug:
-        description: 'Enable debug mode'
-        required: false
-        type: boolean
-        default: false
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
 
 jobs:
-  cypress-test:
-    name: Run Cypress Tests
+  e2e-tests:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    
+
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
+      - name: Verificar versão do Node
+        run: node --version
 
-      - name: Install Dependencies
-        run: npm ci
+      - name: Instalar dependências
+        run: npm install
 
-      - name: Run Cypress Tests
-        uses: cypress-io/github-action@v6
-        with:
-          browser: ${{ github.event.inputs.browser || 'chrome' }}
-          headless: true
-          spec: ${{ github.event.inputs.specs || 'cypress/e2e/**/*.cy.js' }}
-          command: ${{ github.event.inputs.debug == 'true' && 'npm run cy:open' || 'npm run test:report' }}
+      - name: Executar testes Cypress
+        run: npm run test:report
 
-      - name: Upload Test Results
-        if: always()
+      - name: Upload dos artefatos
         uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
         with:
-          name: cypress-test-results
+          name: relatorios-cypress
           path: |
-            cypress/reports/mochawesome
+            cypress/reports
             cypress/screenshots
             cypress/videos
-          retention-days: 30
           if-no-files-found: warn
-          compression-level: 9
-
-      - name: Deploy Test Report
-        if: always()
-        uses: actions/deploy-pages@v4
-        with:
-          artifact_name: cypress-test-results
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup Pages
-        if: always()
-        uses: actions/configure-pages@v4
-
-      - name: Upload Pages Artifact
-        if: always()
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './cypress/reports/mochawesome'
