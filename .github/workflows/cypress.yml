@@ -27,10 +27,18 @@ on:
         type: boolean
         default: false
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   cypress-test:
     name: Run Cypress Tests
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
       - name: Checkout Repository
@@ -68,9 +76,17 @@ jobs:
 
       - name: Deploy Test Report
         if: always()
-        uses: peaceiris/actions-gh-pages@v3
+        uses: actions/deploy-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./cypress/reports/mochawesome
-          destination_dir: test-report
-          keep_files: true
+          artifact_name: cypress-test-results
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Pages
+        if: always()
+        uses: actions/configure-pages@v4
+
+      - name: Upload Pages Artifact
+        if: always()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './cypress/reports/mochawesome'
