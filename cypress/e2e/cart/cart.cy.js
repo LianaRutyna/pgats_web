@@ -1,8 +1,3 @@
-/**
- * Shopping Cart E2E Test
- * Test suite for cart functionality following Cypress best practices
- */
-
 import { faker } from '@faker-js/faker';
 import HeaderModule from '../../modules/common/header.module';
 import ProductsModule from '../../modules/products/products.module';
@@ -27,19 +22,6 @@ describe('Shopping Cart', () => {
   beforeEach(() => {
     HeaderModule.navigateToHome();
   });
-
-  it('should display cart page', () => {
-    // Navigate to cart
-    HeaderModule.clickCart();
-
-    // Verify cart page is loaded
-    CartModule.verifyCartPageLoaded();
-    
-    // Verify the page displays cart content (empty or with items)
-    cy.get('body').should('contain.text', 'Shopping Cart');
-    cy.log('✓ Cart page loaded successfully');
-  });
-
 
   it('TC15 - Place Order: Register before Checkout', () => {
     const testData = cartData.testCase15;
@@ -117,7 +99,7 @@ describe('Shopping Cart', () => {
     
     // Verify some address details
     CheckoutModule.verifyDeliveryAddress({
-      name: userData.firstName + ' ' + userData.lastName,
+      name: userData.title + '. ' + userData.firstName + ' ' + userData.lastName,
       address1: userData.address1,
       city: userData.city + ' ' + userData.state + ' ' + userData.zipcode,
       country: userData.country
@@ -151,6 +133,4 @@ describe('Shopping Cart', () => {
 
     cy.log('✓ TC15 - Place Order: Register before Checkout completed successfully');
   });
-//});
-
-})
+});

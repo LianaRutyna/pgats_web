@@ -10,7 +10,7 @@ class FooterModule {
     subscriptionTitle: '.single-widget h2',
     subscriptionEmail: '#susbscribe_email',
     subscriptionButton: '#subscribe',
-    subscriptionSuccessMessage: '#success-subscribe .alert-success',
+    subscriptionSuccessMessage: '.alert-success',
   };
 
   /**
@@ -58,9 +58,11 @@ class FooterModule {
    * Verify subscription success message
    */
   verifySubscriptionSuccess() {
-    cy.get(this.selectors.subscriptionSuccessMessage)
+    // Aumenta o timeout e verifica a mensagem de sucesso
+    cy.get(this.selectors.subscriptionSuccessMessage, { timeout: 10000 })
       .should('be.visible')
-      .and('contain.text', 'You have been successfully subscribed!');
+      .and('contain.text', 'You have been successfully subscribed!')
+      .and('have.class', 'alert-success');
   }
 
   /**

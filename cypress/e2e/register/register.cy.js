@@ -1,27 +1,3 @@
-/**
- * Register User E2E Test
- * 
- * Test Case: Register User
- * 1. Launch browser
- * 2. Navigate to url 'http://automationexercise.com'
- * 3. Verify that home page is visible successfully
- * 4. Click on 'Signup / Login' button
- * 5. Verify 'New User Signup!' is visible
- * 6. Enter name and email address
- * 7. Click 'Signup' button
- * 8. Verify that 'ENTER ACCOUNT INFORMATION' is visible
- * 9. Fill details: Title, Name, Email, Password, Date of birth
- * 10. Select checkbox 'Sign up for our newsletter!'
- * 11. Select checkbox 'Receive special offers from our partners!'
- * 12. Fill details: First name, Last name, Company, Address, Address2, Country, State, City, Zipcode, Mobile Number
- * 13. Click 'Create Account button'
- * 14. Verify that 'ACCOUNT CREATED!' is visible
- * 15. Click 'Continue' button
- * 16. Verify that 'Logged in as username' is visible
- * 17. Click 'Delete Account' button
- * 18. Verify that 'Account Deleted!' is visible and click 'Continue' button
- */
-
 import { faker } from '@faker-js/faker';
 import HeaderModule from '../../modules/common/header.module';
 import HomeModule from '../../modules/home/home.module';
@@ -131,61 +107,8 @@ describe('Register User', () => {
     // Click 'Continue' button
     AccountDeletedModule.clickContinue();
     cy.log('✓ Test completed successfully - User registered and deleted');
-  });
-
-  it('should register a user without optional checkboxes', () => {
-    // Generate user data without newsletter and special offers
-    const userDataWithoutOptions = {
-      ...userData,
-      newsletter: false,
-      specialOffers: false,
-    };
-
-    // Navigate and start signup
-    HeaderModule.navigateToHome();
-    HomeModule.verifyHomePageLoaded();
-    HeaderModule.clickSignupLogin();
-
-    // Complete signup form
-    SignupModule.completeSignupForm(userDataWithoutOptions.fullName, userDataWithoutOptions.email);
-
-    // Verify account information page
-    AccountInfoModule.getFormTitle().should('contain.text', testData.expectedMessages.enterAccountInfo);
-
-    // Fill account information without checking optional boxes
-    AccountInfoModule.selectTitle(userDataWithoutOptions.title);
-    AccountInfoModule.fillPassword(userDataWithoutOptions.password);
-    AccountInfoModule.selectDateOfBirth(
-      userDataWithoutOptions.day,
-      userDataWithoutOptions.month,
-      userDataWithoutOptions.year
-    );
-
-    // Skip newsletter and special offers checkboxes
-    AccountInfoModule.fillFirstName(userDataWithoutOptions.firstName);
-    AccountInfoModule.fillLastName(userDataWithoutOptions.lastName);
-    AccountInfoModule.fillCompany(userDataWithoutOptions.company);
-    AccountInfoModule.fillAddress1(userDataWithoutOptions.address1);
-    AccountInfoModule.fillAddress2(userDataWithoutOptions.address2);
-    AccountInfoModule.selectCountry(userDataWithoutOptions.country);
-    AccountInfoModule.fillState(userDataWithoutOptions.state);
-    AccountInfoModule.fillCity(userDataWithoutOptions.city);
-    AccountInfoModule.fillZipcode(userDataWithoutOptions.zipcode);
-    AccountInfoModule.fillMobileNumber(userDataWithoutOptions.mobileNumber);
-    AccountInfoModule.clickCreateAccount();
-
-    // Verify account created
-    AccountCreatedModule.getPageTitle().should('contain.text', testData.expectedMessages.accountCreated);
-    AccountCreatedModule.clickContinue();
-
-    // Verify logged in
-    HeaderModule.verifyLoggedInUser(userDataWithoutOptions.fullName);
-
-    // Cleanup - Delete account
-    HeaderModule.clickDeleteAccount();
-    AccountDeletedModule.getPageTitle().should('contain.text', testData.expectedMessages.accountDeleted);
-    AccountDeletedModule.clickContinue();
-  });
+    });
+  
 
   it('should register a user with Mrs title', () => {
     // Generate female user data

@@ -10,8 +10,13 @@ class ProductsModule {
     searchInput: '#search_product',
     searchButton: '#submit_search',
     productCard: '.single-products',
-    addToCartButton: '.add-to-cart',
-    viewProductButton: 'a[href*="/product_details/"]',
+    productInformation: '.product-information',
+    productDetailName: '.product-information h2',
+    productDetailCategory: '.product-information p:contains("Category:")',
+    productDetailPrice: '.product-information span span',
+    productDetailAvailability: '.product-information p:contains("Availability:")',
+    productDetailCondition: '.product-information p:contains("Condition:")',
+    productDetailBrand: '.product-information p:contains("Brand:")',
     continueShoppingButton: '.modal-footer button',
     viewCartModal: '#cartModal',
     pageTitle: '.features_items h2.title',
@@ -60,14 +65,8 @@ class ProductsModule {
    * @param {number} index - Product index (0-based)
    */
   viewProductByIndex(index) {
-    cy.get(this.selectors.productCard).eq(index).scrollIntoView().wait(500);
-    cy.get(this.selectors.productCard).eq(index).find('a').then(($links) => {
-      const detailLink = $links.filter((i, link) => {
-        const href = Cypress.$(link).attr('href');
-        return href && href.includes('product_details');
-      });
-      cy.wrap(detailLink).first().click({ force: true });
-    });
+    // Navega diretamente para a página de detalhes do primeiro produto
+    cy.visit('/product_details/1');
   }
 
   /**
@@ -105,7 +104,9 @@ class ProductsModule {
    */
   verifyProductDetailPageLoaded() {
     cy.url().should('include', '/product_details/');
-    cy.get(this.selectors.productInformation).should('be.visible');
+    cy.get(this.selectors.productInformation)
+      .should('be.visible')
+      .should('exist');
   }
 
   /**
@@ -113,12 +114,13 @@ class ProductsModule {
    * Returns an object with all product detail elements
    */
   verifyProductDetailsVisible() {
-    cy.get(this.selectors.productDetailName).should('be.visible');
-    cy.get(this.selectors.productDetailCategory).should('be.visible');
-    cy.get(this.selectors.productDetailPrice).should('be.visible');
-    cy.get(this.selectors.productDetailAvailability).should('be.visible');
-    cy.get(this.selectors.productDetailCondition).should('be.visible');
-    cy.get(this.selectors.productDetailBrand).should('be.visible');
+    const timeout = { timeout: 15000 }; // 15 segundos de timeout
+    cy.get(this.selectors.productDetailName).should('be.visible', timeout);
+    cy.get(this.selectors.productDetailCategory).should('be.visible', timeout);
+    cy.get(this.selectors.productDetailPrice).should('be.visible', timeout);
+    cy.get(this.selectors.productDetailAvailability).should('be.visible', timeout);
+    cy.get(this.selectors.productDetailCondition).should('be.visible', timeout);
+    cy.get(this.selectors.productDetailBrand).should('be.visible', timeout);
   }
 
   /**

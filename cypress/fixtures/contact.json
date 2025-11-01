@@ -1,0 +1,14 @@
+{
+  "testCase6": {
+    "title": "TC6 - Contact Us Form",
+    "formData": {
+      "name": "testcart123",
+      "email": "testcart123@test",
+      "subject": "test",
+      "message": "test send a file to contact us"
+    },
+    "expectedMessages": {
+      "success": "Success! Your details have been submitted successfully."
+    }
+  }
+}

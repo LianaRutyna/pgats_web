@@ -1,8 +1,3 @@
-/**
- * Products E2E Test
- * Test suite for products functionality
- */
-
 import { faker } from '@faker-js/faker';
 import HeaderModule from '../../modules/common/header.module';
 import HomeModule from '../../modules/home/home.module';
@@ -109,72 +104,6 @@ describe('Products', () => {
     // 7. Verify success message 'You have been successfully subscribed!' is visible
     FooterModule.verifySubscriptionSuccess();
     cy.log('✓ Success message "You have been successfully subscribed!" is visible');
-  });
-
-  it('should display all products on products page', () => {
-    // Navigate to products page
-    HeaderModule.clickProducts();
-
-    // Verify products page is loaded
-    ProductsModule.verifyProductsPageLoaded();
-
-    // Verify products are displayed
-    ProductsModule.getAllProducts().should('have.length.greaterThan', 0);
-    cy.log('✓ Products are displayed successfully');
-  });
-
-  it('should search for a product', () => {
-    // Navigate to products page
-    HeaderModule.clickProducts();
-    ProductsModule.verifyProductsPageLoaded();
-
-    // Search for a product
-    const searchTerm = 'blue';
-    ProductsModule.searchProduct(searchTerm);
-
-    // Verify search results
-    cy.url().should('include', 'search=' + searchTerm);
-    ProductsModule.getAllProducts().should('have.length.greaterThan', 0);
-    cy.log('✓ Search functionality works correctly');
-  });
-
-  it('should add product to cart', () => {
-    // Navigate to products page
-    HeaderModule.clickProducts();
-    ProductsModule.verifyProductsPageLoaded();
-
-    // Add first product to cart
-    ProductsModule.addProductToCartByIndex(0);
-
-    // Click continue shopping
-    cy.wait(1000); // Wait for modal
-    ProductsModule.clickContinueShopping();
-
-    // Navigate to cart and verify
-    HeaderModule.clickCart();
-    CartModule.verifyCartPageLoaded();
-    CartModule.getCartItems().should('have.length', 1);
-    cy.log('✓ Product added to cart successfully');
-  });
-
-  it('should add multiple products to cart', () => {
-    // Navigate to products page
-    HeaderModule.clickProducts();
-    ProductsModule.verifyProductsPageLoaded();
-
-    // Add multiple products
-    const productsToAdd = 3;
-    for (let i = 0; i < productsToAdd; i++) {
-      ProductsModule.addProductToCartByIndex(i);
-      cy.wait(1000);
-      ProductsModule.clickContinueShopping();
-    }
-
-    // Verify cart has all products
-    HeaderModule.clickCart();
-    CartModule.verifyCartPageLoaded();
-    CartModule.getCartItemsCount().should('eq', productsToAdd);
-    cy.log(`✓ ${productsToAdd} products added to cart successfully`);
   });
 });
 

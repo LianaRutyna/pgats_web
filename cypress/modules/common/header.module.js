@@ -14,6 +14,7 @@ class HeaderModule {
     homeLink: 'a[href="/"]',
     productsLink: 'a[href="/products"]',
     cartLink: 'a[href="/view_cart"]',
+    contactUsLink: '#header li:nth-of-type(8) > a',
   };
 
   /**
@@ -71,6 +72,13 @@ class HeaderModule {
    */
   getLoggedInUser() {
     return cy.get(this.selectors.loggedInUser);
+  }
+
+  /**
+   * Click on Contact Us link
+   */
+  clickContactUs() {
+    cy.get(this.selectors.contactUsLink).click();
   }
 }
 

@@ -6,5 +6,7 @@ cypress/downloads/
 *.log
 
 cypress/reports/
-cypress/screenshots/
-cypress/videos/
+INSTALLATION.md/
+MOCHAWESOME_README.md/
+QUICKSTART.md/
+mochawesome-report/

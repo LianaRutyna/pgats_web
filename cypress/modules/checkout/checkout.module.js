@@ -28,8 +28,8 @@ class CheckoutModule {
     invoicePhone: '#address_invoice li.address_phone',
     
     // Review order
-    orderTable: '#cart_info_table',
-    orderItems: '#cart_info tbody tr',
+    orderTable: '.cart_info_table, #cart_info_table, table.table',
+    orderItems: '.cart_info tbody tr, #cart_info tbody tr, table.table tbody tr',
     productName: '.cart_description h4 a',
     productPrice: '.cart_price p',
     productQuantity: '.cart_quantity button',
@@ -42,8 +42,9 @@ class CheckoutModule {
     placeOrderButton: '.btn-default.check_out',
     
     // Headers
-    addressDetailsHeader: '#checkout-page h2.heading:contains("Address Details")',
-    reviewOrderHeader: '#checkout-page h2.heading:contains("Review Your Order")',
+    addressDetailsHeader: 'h2.heading:contains("Address Details")',
+    reviewOrderHeader: 'h2.heading:contains("Review Your Order")',
+    stepOneDiv: '.step-one',
   };
 
   /**
@@ -68,7 +69,18 @@ class CheckoutModule {
    * Verify review order section is visible
    */
   verifyReviewOrderVisible() {
-    cy.get(this.selectors.orderTable).should('be.visible');
+    // Primeiro verifica se a seção e o header estão visíveis
+    cy.get('.step-one')
+      .contains('h2.heading', 'Review Your Order')
+      .should('be.visible');
+    
+    // Espera um pouco para a tabela carregar
+    cy.wait(2000);
+    
+    // Verifica a tabela de pedidos com seletores mais flexíveis
+    cy.get('.cart_info table, #cart_info_table, table.table', { timeout: 15000 })
+      .should('exist')
+      .should('be.visible');
   }
 
   /**
@@ -77,16 +89,28 @@ class CheckoutModule {
    */
   verifyDeliveryAddress(expectedAddress) {
     if (expectedAddress.name) {
-      cy.get(this.selectors.deliveryName).should('contain.text', expectedAddress.name);
+      cy.get(this.selectors.deliveryName)
+        .invoke('text')
+        .then(text => text.replace(/\s+/g, ' ').trim())
+        .should('eq', expectedAddress.name);
     }
     if (expectedAddress.address1) {
-      cy.get(this.selectors.deliveryAddress1).should('contain.text', expectedAddress.address1);
+      cy.get(this.selectors.deliveryAddress1)
+        .invoke('text')
+        .then(text => text.replace(/\s+/g, ' ').trim())
+        .should('eq', expectedAddress.address1);
     }
     if (expectedAddress.city) {
-      cy.get(this.selectors.deliveryCity).should('contain.text', expectedAddress.city);
+      cy.get(this.selectors.deliveryCity)
+        .invoke('text')
+        .then(text => text.replace(/\s+/g, ' ').trim())
+        .should('eq', expectedAddress.city);
     }
     if (expectedAddress.country) {
-      cy.get(this.selectors.deliveryCountry).should('contain.text', expectedAddress.country);
+      cy.get(this.selectors.deliveryCountry)
+        .invoke('text')
+        .then(text => text.replace(/\s+/g, ' ').trim())
+        .should('eq', expectedAddress.country);
     }
   }
 
@@ -159,14 +183,18 @@ class CheckoutModule {
    * Verify Address Details header
    */
   verifyAddressDetailsHeader() {
-    cy.contains('h2.heading', 'Address Details').should('be.visible');
+    cy.get('.step-one')
+      .contains('h2.heading', 'Address Details')
+      .should('be.visible');
   }
 
   /**
    * Verify Review Your Order header
    */
   verifyReviewOrderHeader() {
-    cy.contains('h2.heading', 'Review Your Order').should('be.visible');
+    cy.get('.step-one')
+      .contains('h2.heading', 'Review Your Order')
+      .should('be.visible');
   }
 }
 

@@ -38,7 +38,14 @@ class CartModule {
    * Click proceed to checkout
    */
   clickProceedToCheckout() {
-    cy.get(this.selectors.proceedToCheckoutButton).click();
+    // Garante que estamos na página do carrinho
+    cy.url().should('include', '/view_cart');
+    // Garante que o botão está visível antes de clicar
+    cy.get(this.selectors.proceedToCheckoutButton)
+      .should('be.visible')
+      .click();
+    // Espera a navegação completar
+    cy.url().should('include', '/checkout');
   }
 
   /**

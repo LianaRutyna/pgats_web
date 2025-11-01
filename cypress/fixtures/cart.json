@@ -29,7 +29,7 @@
     "expectedMessages": {
       "accountCreated": "ACCOUNT CREATED!",
       "accountDeleted": "ACCOUNT DELETED!",
-      "orderSuccess": "Your order has been placed successfully!",
+      "orderSuccess": "Congratulations! Your order has been confirmed!",
       "addressDetails": "Address Details",
       "reviewOrder": "Review Your Order"
     }
